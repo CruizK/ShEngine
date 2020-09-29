@@ -1,0 +1,4 @@
+
+# Enviornment Folder Ignores
+.vscode/
+[bB]uild/

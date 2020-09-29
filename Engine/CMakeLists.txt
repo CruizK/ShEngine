@@ -30,21 +30,22 @@ add_subdirectory(deps/imgui)
 add_subdirectory(deps/freetype-2.9)
 add_subdirectory(deps/freetype-gl/ftgl)
 
-file(STB_IMAGE deps/stb_image/src/stb_image.c)
+file(GLOB STB_IMAGE deps/stb_image/src/stb_image.c)
 file(GLOB CORE_SRC src/core/*.cpp src/core/*.h)
 
-add_library(Engine STATIC ${CORE_SRC})
+add_library(Engine STATIC ${CORE_SRC} ${STB_IMAGE})
 
-target_link_libraries(Engine PRIVATE
+target_link_libraries(Engine PUBLIC
   glfw
   spdlog
   imgui
+  glad
   freetype-gl
   freetype
   ${OPENGL_gl_LIBRARY}
 )
 
-target_include_directories(Engine PRIVATE 
+target_include_directories(Engine PUBLIC 
   deps/glm 
   deps/freetype-2.9/include 
   deps/freetype-gl

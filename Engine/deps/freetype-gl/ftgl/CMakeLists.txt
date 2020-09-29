@@ -92,12 +92,10 @@ if(freetype-gl_WITH_GLAD)
     add_definitions(-DGL_WITH_GLAD)
 endif()
 
-message(${CMAKE_SOURCE_DIR}/deps/freetype-2.9/include)
-
 include_directories(
     ${OPENGL_INCLUDE_DIRS}
-    ${CMAKE_SOURCE_DIR}/deps/freetype-2.9/include
-    ${CMAKE_SOURCE_DIR}/deps/glad/include
+    ${CMAKE_SOURCE_DIR}/Engine/deps/freetype-2.9/include
+    ${CMAKE_SOURCE_DIR}/Engine/deps/glad/include
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${GLEW_INCLUDE_PATH}
 )

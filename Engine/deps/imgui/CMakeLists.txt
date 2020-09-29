@@ -23,7 +23,7 @@ set(HEADERS
 )
 
 
-include_directories(include/ImGui ../glad/include ../glfw/include)
+include_directories(include/imgui ../glad/include ../glfw/include)
 
 add_library(imgui STATIC ${SOURCES} ${HEADERS})
 
