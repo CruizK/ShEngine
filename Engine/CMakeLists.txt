@@ -32,8 +32,9 @@ add_subdirectory(deps/freetype-gl/ftgl)
 
 file(GLOB STB_IMAGE deps/stb_image/src/stb_image.c)
 file(GLOB CORE_SRC src/core/*.cpp src/core/*.h)
+file(GLOB GFX_SRC src/gfx/*.cpp src/gfx/*.h)
 
-add_library(Engine STATIC ${CORE_SRC} ${STB_IMAGE})
+add_library(Engine STATIC ${CORE_SRC} ${GFX_SRC} ${STB_IMAGE})
 
 target_link_libraries(Engine PUBLIC
   glfw
@@ -66,3 +67,4 @@ target_include_directories(Engine PUBLIC
 #Visual Studio Folders
 
 source_group("core" FILES ${CORE_SRC})
+source_group("gfx" FILES ${GFX_SRC})
