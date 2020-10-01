@@ -39,6 +39,7 @@ void Shader::CreateFromMemory(const std::string& vertSrc, const std::string& fra
     {
         GLCall(glGetShaderInfoLog(m_VertexShaderID, 512, NULL, infoLog));
         CORE_ERROR("VERT SHADER COMPILATION ERROR: {0}", infoLog);
+        return;
     }
 
     GLCall(m_FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER));
@@ -53,6 +54,7 @@ void Shader::CreateFromMemory(const std::string& vertSrc, const std::string& fra
     {
         GLCall(glGetShaderInfoLog(m_FragmentShaderID, 512, NULL, infoLog));
         CORE_ERROR("FRAGMENT SHADER COMPILATION ERROR: {0}", infoLog);
+        return;
     }
 
     GLCall(m_ProgramID = glCreateProgram());
@@ -66,6 +68,7 @@ void Shader::CreateFromMemory(const std::string& vertSrc, const std::string& fra
     {
         GLCall(glGetProgramInfoLog(m_ProgramID, 512, NULL, infoLog));
         CORE_ERROR("SHADER PROGRAM LINKING ERROR: {0}", infoLog);
+        return;
     }
 
     GLCall(glDeleteShader(m_VertexShaderID));
@@ -91,6 +94,7 @@ void Shader::ReadShaderFromFile(const std::string& path, ShaderSrc& src)
     else
     {
         CORE_ERROR("SHADER NOT FOUND AT PATH: {0}", path);
+        return;
     }
 
     // TODO: Move this into the line search 

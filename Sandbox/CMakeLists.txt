@@ -10,6 +10,8 @@ set(CMAKE_CXX_STANDARD 11)
 
 file(GLOB SRC_FILES src/*.h src/*.cpp)
 
+file(COPY res DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
+
 add_executable(Sandbox ${SRC_FILES})
 
 target_link_libraries(Sandbox PRIVATE

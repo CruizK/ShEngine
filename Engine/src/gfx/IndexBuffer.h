@@ -8,7 +8,7 @@ public:
     IndexBuffer();
     ~IndexBuffer();
 
-    void Create(uint32_t *data, uint32_t);
+    void Create(uint32_t *data, uint32_t count);
 
     void Bind() const;
     void Unbind() const;
