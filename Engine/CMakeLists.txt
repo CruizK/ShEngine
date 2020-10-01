@@ -45,6 +45,17 @@ target_link_libraries(Engine PUBLIC
   ${OPENGL_gl_LIBRARY}
 )
 
+set_target_properties(
+    glfw
+    spdlog
+    imgui
+    glad
+    freetype-gl
+    freetype
+    PROPERTIES
+        FOLDER "deps"
+)
+
 target_include_directories(Engine PUBLIC 
   deps/glm 
   deps/freetype-2.9/include 
