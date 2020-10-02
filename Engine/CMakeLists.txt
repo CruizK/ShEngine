@@ -30,7 +30,7 @@ add_subdirectory(deps/imgui)
 add_subdirectory(deps/freetype-2.9)
 add_subdirectory(deps/freetype-gl/ftgl)
 
-file(GLOB STB_IMAGE deps/stb_image/src/stb_image.c)
+file(GLOB STB_IMAGE deps/stb_image/stb_image.h deps/stb_image/stb_image.c)
 file(GLOB CORE_SRC src/core/*.cpp src/core/*.h)
 file(GLOB GFX_SRC src/gfx/*.cpp src/gfx/*.h)
 
@@ -61,7 +61,7 @@ target_include_directories(Engine PUBLIC
   deps/glm 
   deps/freetype-2.9/include 
   deps/freetype-gl
-  deps/stb_image/include
+  deps/stb_image
 )
 
 #Visual Studio Folders

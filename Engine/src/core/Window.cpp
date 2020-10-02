@@ -70,8 +70,8 @@ void Window::Create(const std::string& title, uint32_t width, uint32_t height)
 
     GLCall(glViewport(0, 0, m_Data.Width, m_Data.Height));
 
-    //GLCall(glEnable(GL_BLEND));
-    //GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+    GLCall(glEnable(GL_BLEND));
+    GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
     glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
         WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);

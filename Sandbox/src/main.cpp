@@ -4,6 +4,7 @@
 #include <gfx/VertexArray.h>
 #include <gfx/IndexBuffer.h>
 #include <gfx/Shader.h>
+#include <gfx/Texture2D.h>
 
 int main()
 {
@@ -17,19 +18,23 @@ int main()
         VertexBufferLayout layout;
         layout.PushFloat(3); // X Y Z
         layout.PushFloat(4); // R G B A
+        layout.PushFloat(2); // U V
 
         float vertices[] = {
-            //X   Y    Z    R    G    B    A
-            0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0,
-            1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0,
-            1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0,
-            0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0 
+            //X   Y    Z    R    G    B    A    U    V
+            0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, // Bottom Left
+            1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, // Bottom Right
+            1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, // Top Right btw
+            0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0,  // Top Left
         };
 
         uint32_t indices[] = {
             0, 1 , 2,
             2, 3, 0,
         };
+
+        Texture2D texture;
+        texture.LoadFromFile("res/textures/test.png");
 
         vao.Bind();
 
@@ -51,7 +56,8 @@ int main()
 
             window.Clear();
 
-            ImGui::ShowDemoWindow();
+            //ImGui::ShowDemoWindow();
+            texture.Bind(0);
             vao.Bind();
             ibo.Bind();
             GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0));
