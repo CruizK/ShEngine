@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GLCall.h"
+#include "../GLCall.h"
 
 class IndexBuffer
 {

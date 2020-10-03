@@ -8,7 +8,7 @@ Texture2D::Texture2D()
 
 Texture2D::~Texture2D()
 {
-	GLCall(glDeleteTextures(1, &m_TextureID));
+	glDeleteTextures(1, &m_TextureID);
 }
 
 void Texture2D::LoadFromFile(const std::string& path)

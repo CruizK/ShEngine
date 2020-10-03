@@ -33,8 +33,14 @@ add_subdirectory(deps/freetype-gl/ftgl)
 file(GLOB STB_IMAGE deps/stb_image/stb_image.h deps/stb_image/stb_image.c)
 file(GLOB CORE_SRC src/core/*.cpp src/core/*.h)
 file(GLOB GFX_SRC src/gfx/*.cpp src/gfx/*.h)
+file(GLOB BUFFER_SRC src/gfx/buffers/*.cpp src/gfx/buffers/*.h) 
 
-add_library(Engine STATIC ${CORE_SRC} ${GFX_SRC} ${STB_IMAGE})
+add_library(Engine STATIC 
+  ${CORE_SRC} 
+  ${GFX_SRC}
+  ${BUFFER_SRC} 
+  ${STB_IMAGE}
+)
 
 target_link_libraries(Engine PUBLIC
   glfw
@@ -68,3 +74,4 @@ target_include_directories(Engine PUBLIC
 
 source_group("core" FILES ${CORE_SRC})
 source_group("gfx" FILES ${GFX_SRC})
+source_group("gfx\\buffers" FILES ${BUFFER_SRC})

@@ -19,15 +19,7 @@ Window::Window(const std::string& title, uint32_t width, uint32_t height)
 
 Window::~Window()
 {
-    if(m_UsingImGui)
-    {
-        ImGui_ImplOpenGL3_Shutdown();
-        ImGui_ImplGlfw_Shutdown();
-        ImGui::DestroyContext();
-    }
-
-    glfwDestroyWindow(m_Window);
-    glfwTerminate();
+ 
 }
 
 void Window::Create(const std::string& title, uint32_t width, uint32_t height)

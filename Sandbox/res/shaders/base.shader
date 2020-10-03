@@ -1,17 +1,20 @@
 #vertex
 #version 330 core
 
-layout (location = 0) in vec3 iPos;
+layout (location = 0) in vec4 iPos;
 layout (location = 1) in vec4 iColor;
 layout (location = 2) in vec2 iTexCoords;
+layout (location = 3) in float iTexIndex;
 
-out vec3 oPos;
+out vec4 oPos;
 out vec4 oColor;
 out vec2 oTexCoords;
 
+uniform mat4 u_Proj;
+
 void main()
 {
-    gl_Position = vec4(iPos.xyz, 1);
+    gl_Position = u_Proj * iPos;
     oPos = iPos;
     oColor = iColor;
     oTexCoords = iTexCoords;
@@ -20,7 +23,7 @@ void main()
 #fragment
 #version 330 core
 
-in vec3 oPos;
+in vec4 oPos;
 in vec4 oColor;
 in vec2 oTexCoords;
 

@@ -1,70 +1,52 @@
 #include <core/Window.h>
 #include <imgui/imgui.h>
 
-#include <gfx/VertexArray.h>
-#include <gfx/IndexBuffer.h>
-#include <gfx/Shader.h>
+
+#include <gfx/Renderer2D.h>
 #include <gfx/Texture2D.h>
+#include <glm/gtc/matrix_transform.hpp>
+
 
 int main()
 {
+    Window window;
+    window.Create("Window", 1280, 720);
+
+    Renderer2D::Init();
+
+    Renderable2D sprite;
+
+
+    sprite.SetPosition(0, 0);
+    sprite.SetScale(100);
+       
+    Texture2D texture;
+    texture.LoadFromFile("res/textures/test.png");
+    texture.Unbind();
+
+    const float width = 1280;
+    const float height = 720;
+
+    glm::mat4 ortho = glm::ortho(0.0f, width, 0.0f, height, -0.1f, 100.0f) ;
+    ortho = glm::translate(ortho, glm::vec3(width / 2, height / 2, 0));
+
+
+    window.UseImGui();
+    while (window.IsOpen())
     {
-        Window window;
-        window.Create("Window", 1280, 720);
-        VertexArray vao;
-        VertexBuffer vbo;
-        IndexBuffer ibo;
+        window.PollEvents();
 
-        VertexBufferLayout layout;
-        layout.PushFloat(3); // X Y Z
-        layout.PushFloat(4); // R G B A
-        layout.PushFloat(2); // U V
+        window.Clear();
 
-        float vertices[] = {
-            //X   Y    Z    R    G    B    A    U    V
-            0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, // Bottom Left
-            1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, // Bottom Right
-            1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, // Top Right btw
-            0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0,  // Top Left
-        };
+        Renderer2D::Begin(ortho);
+        Renderer2D::DrawQuad(sprite.GetTransform(), sprite.GetColor());
+        Renderer2D::End();
+        //ImGui::ShowDemoWindow();
+        //texture.Bind(0);
 
-        uint32_t indices[] = {
-            0, 1 , 2,
-            2, 3, 0,
-        };
-
-        Texture2D texture;
-        texture.LoadFromFile("res/textures/test.png");
-
-        vao.Bind();
-
-        vbo.Create(vertices, sizeof(vertices));
-        ibo.Create(indices, sizeof(indices));
-        vao.AddBuffer(vbo, layout);
-
-        vbo.Unbind();
-        vao.Unbind();
-
-        Shader shader;
-        shader.CreateFromFile("res/shaders/base.shader");
-        shader.Use();
-
-        window.UseImGui();
-        while (window.IsOpen())
-        {
-            window.PollEvents();
-
-            window.Clear();
-
-            //ImGui::ShowDemoWindow();
-            texture.Bind(0);
-            vao.Bind();
-            ibo.Bind();
-            GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0));
-
-            window.Display();
-        }
+        window.Display();
     }
-
+    CORE_TRACE("EXITED LOOP");
+    Renderer2D::Shutdown();
     return 0;
 }
