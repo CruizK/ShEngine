@@ -17,10 +17,13 @@ public:
 
 	static void Begin(const glm::mat4& camera);
 	
+	static void DrawQuad(const Renderable2D& renderable);
 	static void DrawQuad(const glm::mat4& transform, const glm::vec4& color);
+	static void DrawQuad(const glm::mat4& transform, const std::shared_ptr<Texture2D> texture, const glm::vec4& tintColor);
 
 	static void End();
 
 private:
-
+	static void Flush();
+	static void FlushAndReset();
 };

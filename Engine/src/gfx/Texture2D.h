@@ -21,6 +21,11 @@ public:
 	void Bind(uint32_t slot) const;
 	void Unbind() const;
 
+	bool operator==(const Texture2D& other) const
+	{
+		return m_TextureID == other.m_TextureID;
+	}
+
 private:
 	uint32_t m_TextureID;
 	Size m_Size;

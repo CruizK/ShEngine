@@ -9,6 +9,7 @@ layout (location = 3) in float iTexIndex;
 out vec4 oPos;
 out vec4 oColor;
 out vec2 oTexCoords;
+out float oTexIndex;
 
 uniform mat4 u_Proj;
 
@@ -18,6 +19,7 @@ void main()
     oPos = iPos;
     oColor = iColor;
     oTexCoords = iTexCoords;
+    oTexIndex = iTexIndex;
 }
 
 #fragment
@@ -26,12 +28,15 @@ void main()
 in vec4 oPos;
 in vec4 oColor;
 in vec2 oTexCoords;
+in float oTexIndex;
 
 out vec4 FragColor;
 
-uniform sampler2D uTexture;
+uniform sampler2D u_Textures[32];
 
 void main()
 {
-    FragColor = texture2D(uTexture, oTexCoords) * oColor;
+    int texIndex = int(oTexIndex);
+
+    FragColor = texture2D(u_Textures[texIndex], oTexCoords) * oColor;
 }

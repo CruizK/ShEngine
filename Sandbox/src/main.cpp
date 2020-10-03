@@ -20,9 +20,8 @@ int main()
     sprite.SetPosition(0, 0);
     sprite.SetScale(100);
        
-    Texture2D texture;
-    texture.LoadFromFile("res/textures/test.png");
-    texture.Unbind();
+    std::shared_ptr<Texture2D> texture = std::make_shared<Texture2D>();
+    texture->LoadFromFile("res/textures/test.png");
 
     const float width = 1280;
     const float height = 720;
@@ -39,7 +38,7 @@ int main()
         window.Clear();
 
         Renderer2D::Begin(ortho);
-        Renderer2D::DrawQuad(sprite.GetTransform(), sprite.GetColor());
+        Renderer2D::DrawQuad(sprite.GetTransform(), texture, sprite.GetColor());
         Renderer2D::End();
         //ImGui::ShowDemoWindow();
         //texture.Bind(0);
