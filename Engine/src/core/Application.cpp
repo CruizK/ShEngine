@@ -33,7 +33,7 @@ namespace Shengine {
 
 			m_LayerStack.Update();
 
-			// Run draw & Update on current scene
+			// Run draw & Update on current layer
 			m_LayerStack.Draw();
 
 			m_ImGuiHelper.Begin();

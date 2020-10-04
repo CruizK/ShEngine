@@ -13,7 +13,9 @@ namespace Shengine {
 
 	ImGuiHelper::~ImGuiHelper()
 	{
-	
+		ImGui_ImplGlfw_Shutdown();
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui::DestroyContext();
 	}
 
 	void ImGuiHelper::Init()
