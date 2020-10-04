@@ -2,7 +2,7 @@
 
 #include <core/EntryPoint.h>
 
-class GameApp : public Application
+class GameApp : public Shengine::Application
 {
 public:
 	GameApp() 
@@ -16,7 +16,7 @@ public:
 	}
 };
 
-Application* CreateApplication()
+Shengine::Application* CreateApplication()
 {
 	return new GameApp();
 }

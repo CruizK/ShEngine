@@ -3,19 +3,23 @@
 #include "Layer.h"
 #include <vector>
 
-class LayerStack
-{
-public:
-	LayerStack();
-	~LayerStack();
+namespace Shengine {
 
-	void PushLayer(Scope<Layer> layer);
-	void PopLayer(Scope<Layer> layer);
+	class LayerStack
+	{
+	public:
+		LayerStack();
+		~LayerStack();
 
-	void Update();
-	void Draw();
-	void DrawImGui();
+		void PushLayer(Scope<Layer> layer);
+		void PopLayer(Scope<Layer> layer);
 
-private:
-	std::vector<Scope<Layer>> m_Layers;
-};
+		void Update();
+		void Draw();
+		void DrawImGui();
+
+	private:
+		std::vector<Scope<Layer>> m_Layers;
+	};
+
+}

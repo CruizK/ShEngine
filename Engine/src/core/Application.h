@@ -4,26 +4,30 @@
 #include "LayerStack.h"
 #include "../imgui/ImGuiHelper.h"
 
+
 int main(int argc, char** argv);
 
-class Application
-{
-public:
-	Application();
-	~Application();
+namespace Shengine {
 
-	const Scope<Window>& GetWindow() { return m_Window; }
+	class Application
+	{
+	public:
+		Application();
+		~Application();
 
-	static Application& Get() { return *s_Instance; }
+		const Scope<Window>& GetWindow() { return m_Window; }
 
-private:
-	void Run();
+		static Application& Get() { return *s_Instance; }
 
-	Scope<Window> m_Window;
-	LayerStack m_LayerStack;
-	ImGuiHelper m_ImGuiHelper;
-	uint32_t m_ScreenWidth, m_ScreenHeight;
+	private:
+		void Run();
 
-	static Application* s_Instance;
-	friend int ::main(int argc, char** argv);
-};
+		Scope<Window> m_Window;
+		LayerStack m_LayerStack;
+		ImGuiHelper m_ImGuiHelper;
+		uint32_t m_ScreenWidth, m_ScreenHeight;
+
+		static Application* s_Instance;
+		friend int ::main(int argc, char** argv);
+	};
+}

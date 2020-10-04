@@ -2,17 +2,18 @@
 
 #include "../core/Layer.h"
 
-class ImGuiHelper
-{
-public:
-	ImGuiHelper();
-	~ImGuiHelper();
+namespace Shengine {
+
+	class ImGuiHelper
+	{
+	public:
+		ImGuiHelper();
+		~ImGuiHelper();
 	
-	void Init();
+		void Init();
 
 
-	void Begin();
-	void End();
-
-private:
-};
+		void Begin();
+		void End();
+	};
+}

@@ -2,11 +2,11 @@
 
 #include "Application.h"
 
-extern Application* CreateApplication();
+extern Shengine::Application* CreateApplication();
 
 int main(int argc, char** argv)
 {
-	Application* app = CreateApplication();
+	auto app = CreateApplication();
 
 	app->Run();
 

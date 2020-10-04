@@ -6,35 +6,37 @@
 #include <imgui/imgui_impl_opengl3.h>
 
 
-ImGuiHelper::ImGuiHelper()
-{
-}
+namespace Shengine {
+	ImGuiHelper::ImGuiHelper()
+	{
+	}
 
-ImGuiHelper::~ImGuiHelper()
-{
+	ImGuiHelper::~ImGuiHelper()
+	{
 	
-}
+	}
 
-void ImGuiHelper::Init()
-{
-	ImGui::CreateContext();
-	ImGui::StyleColorsDark();
+	void ImGuiHelper::Init()
+	{
+		ImGui::CreateContext();
+		ImGui::StyleColorsDark();
 
-	ImGui_ImplGlfw_InitForOpenGL(
-		Application::Get().GetWindow()->GetWindowPtr(), true);
-	ImGui_ImplOpenGL3_Init("#version 330 core");
-}
+		ImGui_ImplGlfw_InitForOpenGL(
+			Application::Get().GetWindow()->GetWindowPtr(), true);
+		ImGui_ImplOpenGL3_Init("#version 330 core");
+	}
 
-void ImGuiHelper::Begin()
-{
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplGlfw_NewFrame();
-	ImGui::NewFrame();
-}
+	void ImGuiHelper::Begin()
+	{
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+	}
 
-void ImGuiHelper::End()
-{
-	ImGui::ShowDemoWindow();
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	void ImGuiHelper::End()
+	{
+		ImGui::ShowDemoWindow();
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	}
 }
