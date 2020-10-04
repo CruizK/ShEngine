@@ -14,17 +14,15 @@ public:
 
     inline bool IsOpen() { return m_Data.IsOpen; }
 
-    void UseImGui();
 
     void PollEvents();
     void Clear();
     void Display();
 
-    inline GLFWwindow *GetWindowPtr() { return m_Window; }
+    inline GLFWwindow* GetWindowPtr() { return m_Window; }
 
 private:
     GLFWwindow *m_Window;
-    bool m_UsingImGui;
 
     struct WindowData
     {

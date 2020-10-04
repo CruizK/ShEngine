@@ -98,8 +98,8 @@ void Shader::ReadShaderFromFile(const std::string& path, ShaderSrc& src)
     }
 
     // TODO: Move this into the line search 
-    int vertStart = fileSrc.rfind("#vertex");
-    int fragStart = fileSrc.rfind("#fragment");
+    size_t vertStart = fileSrc.rfind("#vertex");
+    size_t fragStart = fileSrc.rfind("#fragment");
     
     if(vertStart < fragStart)
     {

@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.16)
 
-if (${CMAKE_VERSION} VERSION_LESS 3.12)
+if (${CMAKE_VERSION} VERSION_LESS 3.16)
   cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
 endif()
 
@@ -30,17 +30,24 @@ add_subdirectory(deps/imgui)
 add_subdirectory(deps/freetype-2.9)
 add_subdirectory(deps/freetype-gl/ftgl)
 
-file(GLOB STB_IMAGE deps/stb_image/stb_image.h deps/stb_image/stb_image.c)
-file(GLOB CORE_SRC src/core/*.cpp src/core/*.h)
-file(GLOB GFX_SRC src/gfx/*.cpp src/gfx/*.h)
-file(GLOB BUFFER_SRC src/gfx/buffers/*.cpp src/gfx/buffers/*.h) 
+file(GLOB_RECURSE SRC_FILES
+    LIST_DIRECTORIES false
+    "src/*.cpp" "src/*.h")
 
-add_library(Engine STATIC 
-  ${CORE_SRC} 
-  ${GFX_SRC}
-  ${BUFFER_SRC} 
-  ${STB_IMAGE}
-)
+file(GLOB STB_IMAGE deps/stb_image/stb_image.h deps/stb_image/stb_image.c)
+#file(GLOB CORE_SRC src/core/*.cpp src/core/*.h)
+#file(GLOB GFX_SRC src/gfx/*.cpp src/gfx/*.h)
+#file(GLOB IMGUI_SRC src/imgui/*.cpp src/imgui/*.h)
+#file(GLOB BUFFER_SRC src/gfx/buffers/*.cpp src/gfx/buffers/*.h) 
+
+#add_library(Engine STATIC 
+#  ${CORE_SRC} 
+#  ${GFX_SRC}
+#  ${BUFFER_SRC} 
+#  ${STB_IMAGE}
+#)
+
+add_library(Engine STATIC ${SRC_FILES} ${STB_IMAGE})
 
 target_link_libraries(Engine PUBLIC
   glfw
@@ -70,8 +77,21 @@ target_include_directories(Engine PUBLIC
   deps/stb_image
 )
 
+target_precompile_headers(Engine PRIVATE src/pch.h)
+
 #Visual Studio Folders
 
-source_group("core" FILES ${CORE_SRC})
-source_group("gfx" FILES ${GFX_SRC})
-source_group("gfx\\buffers" FILES ${BUFFER_SRC})
+set(SRC_ROOT_PATH "${Engine_SOURCE_DIR}/src")
+
+foreach(SRC_FILE IN ITEMS ${SRC_FILES})
+    get_filename_component(SRC_PATH "${SRC_FILE}" PATH)
+    file(RELATIVE_PATH SRC_PATH_REL "${SRC_ROOT_PATH}" "${SRC_PATH}")
+    string(REPLACE "/" "\\" GROUP_PATH "${SRC_PATH_REL}")
+    source_group("${GROUP_PATH}" FILES ${SRC_FILE})
+endforeach()
+
+
+#source_group("core" FILES ${CORE_SRC})
+#source_group("gfx" FILES ${GFX_SRC})
+#source_group("gfx\\buffers" FILES ${BUFFER_SRC})
+#source_group("imgui" FILES ${IMGUI_SRC})

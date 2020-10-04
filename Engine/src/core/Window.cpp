@@ -6,25 +6,25 @@
 #include <imgui/imgui_impl_opengl3.h>
 
 Window::Window() 
-    : m_Window(nullptr), m_UsingImGui(false)
+    : m_Window(nullptr)
 {
 
 }
 
 Window::Window(const std::string& title, uint32_t width, uint32_t height)
-    : m_Window(nullptr), m_UsingImGui(false)
+    : m_Window(nullptr)
 {
     Create(title, width, height);
 }
 
 Window::~Window()
 {
- 
+    glfwDestroyWindow(m_Window);
+    glfwTerminate();
 }
 
 void Window::Create(const std::string& title, uint32_t width, uint32_t height)
 {
-    Log::Init();
     m_Data.Title = title;
     m_Data.Width = width;
     m_Data.Height = height;
@@ -78,16 +78,6 @@ void Window::Create(const std::string& title, uint32_t width, uint32_t height)
     });
 }
 
-void Window::UseImGui()
-{
-    ImGui::CreateContext();
-    ImGui::StyleColorsDark();
-
-    ImGui_ImplGlfw_InitForOpenGL(m_Window, true);
-    ImGui_ImplOpenGL3_Init("#version 330 core");
-    m_UsingImGui = true;
-}
-
 void Window::PollEvents()
 {
     glfwPollEvents();
@@ -97,22 +87,9 @@ void Window::Clear()
 {
     GLCall(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
     GLCall(glClear(GL_COLOR_BUFFER_BIT));
-
-    if (m_UsingImGui)
-    {
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-    }
 }
 
 void Window::Display()
 {
-    if (m_UsingImGui)
-    {
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    }
-
     glfwSwapBuffers(m_Window);
 }

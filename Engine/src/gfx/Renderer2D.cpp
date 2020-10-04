@@ -2,7 +2,6 @@
 #include "buffers/VertexArray.h"
 #include "buffers/IndexBuffer.h"
 #include <array>
-#include <memory>
 
 struct QuadVertex
 {
@@ -20,13 +19,13 @@ struct Renderer2DData
 	static const uint32_t MaxIndices = MaxQuads * 6;
 	static const uint32_t MaxTextureSlots = 32;
 
-	std::unique_ptr<VertexArray> QuadVertexArray;
-	std::unique_ptr<VertexBuffer> QuadVertexBuffer;
-	std::unique_ptr<IndexBuffer> QuadIndexBuffer;
+	Ref<VertexArray> QuadVertexArray;
+	Ref<VertexBuffer> QuadVertexBuffer;
+	Ref<IndexBuffer> QuadIndexBuffer;
 	VertexBufferLayout QuadVertexLayout;
 
-	std::shared_ptr<Shader> TextureShader;
-	std::shared_ptr<Texture2D> WhiteTexture;
+	Ref<Shader> TextureShader;
+	Ref<Texture2D> WhiteTexture;
 
 	uint32_t QuadIndexCount = 0;
 	QuadVertex* QuadVertexBufferBase = nullptr;
@@ -43,8 +42,8 @@ static Renderer2DData s_Data;
 
 void Renderer2D::Init()
 {
-	s_Data.QuadVertexArray = std::make_unique<VertexArray>();
-	s_Data.QuadVertexBuffer = std::make_unique<VertexBuffer>();
+	s_Data.QuadVertexArray = CreateRef<VertexArray>();
+	s_Data.QuadVertexBuffer = CreateRef<VertexBuffer>();
 
 	s_Data.QuadVertexBuffer->Create(nullptr, s_Data.MaxVertices * sizeof(QuadVertex));
 	
@@ -78,14 +77,14 @@ void Renderer2D::Init()
 	}
 
 	// TODO: Maybe put index buffer in Vertex Array to couple all the buffer binding
-	s_Data.QuadIndexBuffer = std::make_unique<IndexBuffer>();
+	s_Data.QuadIndexBuffer = CreateRef<IndexBuffer>();
 	s_Data.QuadIndexBuffer->Create(quadIndices, s_Data.MaxIndices * sizeof(uint32_t));
 	delete[] quadIndices;
 
 
 	// Create Texture
 	uint32_t whiteTextureData = 0xffffffff;
-	s_Data.WhiteTexture = std::make_unique<Texture2D>();
+	s_Data.WhiteTexture = CreateRef<Texture2D>();
 	s_Data.WhiteTexture->LoadFromMemory(&whiteTextureData, 1, 1, 4);
 
 	int32_t samplers[s_Data.MaxTextureSlots];
@@ -95,7 +94,7 @@ void Renderer2D::Init()
 	s_Data.TextureSlots[0] = s_Data.WhiteTexture;
 
 	// Create Shader
-	s_Data.TextureShader = std::make_unique<Shader>();
+	s_Data.TextureShader = CreateRef<Shader>();
 	s_Data.TextureShader->CreateFromFile("res/shaders/base.shader");
 	s_Data.TextureShader->Use();
 	s_Data.TextureShader->SetInt1v("u_Textures", s_Data.MaxTextureSlots, samplers);
