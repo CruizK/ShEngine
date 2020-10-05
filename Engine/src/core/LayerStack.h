@@ -11,15 +11,15 @@ namespace Shengine {
 		LayerStack();
 		~LayerStack();
 
-		void PushLayer(Scope<Layer> layer);
-		void PopLayer(Scope<Layer> layer);
+		void PushLayer(Layer* layer);
+		void PopLayer(Layer* layer);
 
-		void Update();
+		void Update(float dt);
 		void Draw();
 		void DrawImGui();
 
 	private:
-		std::vector<Scope<Layer>> m_Layers;
+		std::vector<Layer*> m_Layers;
 	};
 
 }

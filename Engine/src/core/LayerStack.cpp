@@ -8,28 +8,32 @@ namespace Shengine {
 
 	LayerStack::~LayerStack()
 	{
+		for (Layer* layer : m_Layers)
+			delete layer;
 	}
 
-	void LayerStack::PushLayer(Scope<Layer> layer)
+	void LayerStack::PushLayer(Layer* layer)
 	{
 		m_Layers.push_back(layer);
+		m_Layers.back()->Init();
 	}
 
-	void LayerStack::PopLayer(Scope<Layer> layer)
+	void LayerStack::PopLayer(Layer* layer)
 	{
 		for (uint32_t i = 0; i < m_Layers.size(); i++)
 		{
 			m_Layers[i]->Destroy();
+			delete m_Layers[i];
 			m_Layers.erase(m_Layers.begin() + i);
 			break;
 		}
 	}
 
-	void LayerStack::Update()
+	void LayerStack::Update(float dt)
 	{
 		for (auto layer : m_Layers)
 		{
-			layer->Update();
+			layer->Update(dt);
 		}
 	}
 

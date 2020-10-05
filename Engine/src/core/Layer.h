@@ -8,11 +8,11 @@ namespace Shengine {
 		Layer() {}
 		virtual ~Layer() = default;
 
-		virtual void Init() = 0;
-		virtual void Destroy() = 0;
-		virtual void Update() = 0;
-		virtual void Draw() = 0;
-		virtual void DrawImGui() = 0;
+		virtual void Init() {}
+		virtual void Destroy() {}
+		virtual void Update(float dt) {}
+		virtual void Draw() {}
+		virtual void DrawImGui() {}
 
 	};
 

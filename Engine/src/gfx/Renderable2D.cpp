@@ -61,6 +61,8 @@ namespace Shengine {
 
 	void Renderable2D::UpdateTransform()
 	{
+		m_Transform = glm::mat4(1.0f);
+
 		m_Transform =
 			glm::translate(m_Transform, m_Position) *
 			glm::scale(m_Transform, glm::vec3(m_Scale.x, m_Scale.y, 1));

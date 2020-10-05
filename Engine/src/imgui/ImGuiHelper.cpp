@@ -22,9 +22,11 @@ namespace Shengine {
 	{
 		ImGui::CreateContext();
 		ImGui::StyleColorsDark();
-
+		
 		ImGui_ImplGlfw_InitForOpenGL(
-			Application::Get().GetWindow()->GetWindowPtr(), true);
+			Application::Get().GetWindow()->GetWindowPtr(), 
+			true
+		);
 		ImGui_ImplOpenGL3_Init("#version 330 core");
 	}
 

@@ -17,10 +17,15 @@ namespace Shengine {
 
 		const Scope<Window>& GetWindow() { return m_Window; }
 
+		void PushLayer(Layer* layer);
+		void PopLayer(Layer* layer);
+
 		static Application& Get() { return *s_Instance; }
 
 	private:
 		void Run();
+
+		float m_LastFrameTime;
 
 		Scope<Window> m_Window;
 		LayerStack m_LayerStack;
