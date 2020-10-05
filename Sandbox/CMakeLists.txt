@@ -6,7 +6,7 @@ endif()
 
 project(Sandbox VERSION 0.1 DESCRIPTION "Sandbox" LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 file(GLOB SRC_FILES src/*.h src/*.cpp)
 file(GLOB SHADER_FILES res/shaders/*.shader)

@@ -6,7 +6,7 @@ endif()
 
 project(Engine VERSION 0.1 DESCRIPTION "ShEngine" LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 #GLFW Build Settings
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
@@ -26,6 +26,7 @@ add_subdirectory(deps/glfw)
 add_subdirectory(deps/spdlog)
 add_subdirectory(deps/glm)
 add_subdirectory(deps/imgui)
+add_subdirectory(deps/stb_image)
 
 add_subdirectory(deps/freetype-2.9)
 add_subdirectory(deps/freetype-gl/ftgl)
@@ -34,7 +35,6 @@ file(GLOB_RECURSE SRC_FILES
     LIST_DIRECTORIES false
     "src/*.cpp" "src/*.h")
 
-file(GLOB STB_IMAGE deps/stb_image/stb_image.h deps/stb_image/stb_image.c)
 #file(GLOB CORE_SRC src/core/*.cpp src/core/*.h)
 #file(GLOB GFX_SRC src/gfx/*.cpp src/gfx/*.h)
 #file(GLOB IMGUI_SRC src/imgui/*.cpp src/imgui/*.h)
@@ -51,6 +51,7 @@ add_library(Engine STATIC ${SRC_FILES} ${STB_IMAGE})
 
 target_link_libraries(Engine PUBLIC
   glfw
+  stb_image
   spdlog
   imgui
   glad
