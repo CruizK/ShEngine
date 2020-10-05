@@ -40,7 +40,7 @@ void GameLayer::Update(float dt)
 
 	m_Renderable.SetPosition(m_Renderable.GetPosition() + velocity);
 
-	CORE_TRACE("({0},{1},{2})", m_Renderable.GetPosition().x, m_Renderable.GetPosition().y, m_Renderable.GetPosition().z);
+	//CORE_TRACE("({0},{1},{2})", m_Renderable.GetPosition().x, m_Renderable.GetPosition().y, m_Renderable.GetPosition().z);
 }
 
 void GameLayer::Draw()
