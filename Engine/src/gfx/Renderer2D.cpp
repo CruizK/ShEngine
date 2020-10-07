@@ -112,10 +112,10 @@ namespace Shengine {
 		delete[] s_Data.QuadVertexBufferBase;
 	}
 
-	void Renderer2D::Begin(const glm::mat4& camera)
+	void Renderer2D::Begin(const OrthoCamera& camera)
 	{
 		s_Data.TextureShader->Use();
-		s_Data.TextureShader->SetMat4("u_Proj", camera);
+		s_Data.TextureShader->SetMat4("u_Proj", camera.GetTransform());
 
 		s_Data.QuadIndexCount = 0;
 		s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;

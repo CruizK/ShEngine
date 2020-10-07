@@ -10,9 +10,8 @@ void GameLayer::Init()
 	m_Renderable.SetPosition(100, 100);
 	
 
-	m_Ortho = glm::ortho(0.0f, 1280.0f, 0.0f, 720.0f, -0.1f, 100.0f);
+	m_Camera.SetProjection(0.0f, 1280.0f, 0.0f, 720.0f, -0.1f, 100.0f);
 	//m_Ortho = glm::translate(m_Ortho, glm::vec3(1280.0f / 2, 720.0f / 2, 0));
-
 }
 
 void GameLayer::Update(float dt)
@@ -21,20 +20,42 @@ void GameLayer::Update(float dt)
 
 	if (Shengine::Input::IsKeyPressed(GLFW_KEY_W))
 	{
-		direction.y++;
+		m_Camera.MoveCamera({ 0, -1 });
 	}
 	if (Shengine::Input::IsKeyPressed(GLFW_KEY_S))
 	{
-		direction.y--;
+		m_Camera.MoveCamera({ 0, 1 });
 	}
 	if (Shengine::Input::IsKeyPressed(GLFW_KEY_A))
 	{
-		direction.x--;
+		m_Camera.MoveCamera({ 1, 0 });
 	}
 	if (Shengine::Input::IsKeyPressed(GLFW_KEY_D))
 	{
-		direction.x++;
+		m_Camera.MoveCamera({ -1, 0 });
 	}
+
+    if(Shengine::Input::IsKeyPressed(GLFW_KEY_Q))
+    {
+        m_Camera.SetRotation(-0.1f);
+    }
+
+    if(Shengine::Input::IsKeyPressed(GLFW_KEY_E))
+    {
+        m_Camera.SetRotation(0.1f);
+    }
+
+    if(Shengine::Input::IsKeyPressed(GLFW_KEY_Z))
+    {
+        m_Camera.SetZoom(0.01f);
+    }
+
+    if(Shengine::Input::IsKeyPressed(GLFW_KEY_X))
+    {
+        m_Camera.SetZoom(-0.01f);
+    }
+
+    
 
 	glm::vec3 velocity = glm::vec3(direction.x, direction.y, 0) * dt * 500.0f;
 
@@ -45,7 +66,7 @@ void GameLayer::Update(float dt)
 
 void GameLayer::Draw()
 {
-	Shengine::Renderer2D::Begin(m_Ortho);
+	Shengine::Renderer2D::Begin(m_Camera);
 
 	Shengine::Renderer2D::DrawQuad(m_Renderable);
 
