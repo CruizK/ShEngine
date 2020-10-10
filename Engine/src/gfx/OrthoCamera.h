@@ -1,3 +1,4 @@
+#pragma once
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -9,15 +10,16 @@ public:
     OrthoCamera();
     ~OrthoCamera();
 
-    void SetProjection(float left, float right, float bottom, float top, float zNear, float zFar);
+    void SetProjection(float left, float right, float bottom, float top);
 
-    inline void MoveCamera(const glm::vec2& moveBy) { m_Position += moveBy; RecalcTransform(); }
-    inline void SetPosition(const glm::vec2& pos) { m_Position = pos; RecalcTransform(); }
-    inline void SetRotation(float angle) { m_Rotation += angle; RecalcTransform(); }
-    inline void SetZoom(float zoom) { m_Zoom += zoom; RecalcTransform(); }
+    inline void SetPosition(const glm::vec2& pos) { m_Position = pos; RecalcTransform();}
+    inline void SetRotation(float angle) { m_Rotation = angle; RecalcTransform(); }
+    inline void SetZoom(float zoom) { m_Zoom = zoom; RecalcTransform(); }
 
     inline const glm::mat4& GetTransform() const { return m_Transform; } 
 
+
+    void UpdateTransform(const glm::vec2& pos, float angle, float zoom);
 private:
     void RecalcTransform();
 

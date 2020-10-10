@@ -3,10 +3,13 @@
 #include <core/Layer.h>
 #include <gfx/Renderable2D.h>
 #include <gfx/Renderer2D.h>
+#include <gfx/OrthoCameraController.h>
 
 class GameLayer : public Shengine::Layer
 {
 public:
+    GameLayer();
+
 	virtual void Init() override;
 	
 	virtual void Update(float dt) override;
@@ -14,5 +17,5 @@ public:
 
 private:
 	Shengine::Renderable2D m_Renderable;
-	Shengine::OrthoCamera m_Camera;
+    Shengine::OrthoCameraController m_CameraController;
 };
