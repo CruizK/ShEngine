@@ -1,5 +1,5 @@
 #pragma once
-#include "Texture2D.h"
+#include "Font.h"
 #include "Shader.h"
 #include "Renderable2D.h"
 #include "OrthoCamera.h"
@@ -21,7 +21,8 @@ namespace Shengine {
 
 		static void DrawQuad(const Renderable2D& renderable);
 		static void DrawQuad(const glm::mat4& transform, const glm::vec4& color);
-		static void DrawQuad(const glm::mat4& transform, const std::shared_ptr<Texture2D> texture, const glm::vec4& tintColor);
+		static void DrawQuad(const glm::mat4& transform, const Ref<Texture2D> texture, const glm::vec4& tintColor);
+		static void DrawString(const glm::mat4 transform, const Ref<Font> font, const std::string& text, const glm::vec4& color);
 
 		static void End();
 

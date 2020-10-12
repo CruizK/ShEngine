@@ -101,10 +101,10 @@ namespace Shengine {
 		s_Data.TextureShader->Use();
 		s_Data.TextureShader->SetInt1v("u_Textures", s_Data.MaxTextureSlots, samplers);
 
-		s_Data.QuadVertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
-		s_Data.QuadVertexPositions[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
-		s_Data.QuadVertexPositions[2] = { 0.5f,  0.5f, 0.0f, 1.0f };
-		s_Data.QuadVertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
+		s_Data.QuadVertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f }; // BL
+		s_Data.QuadVertexPositions[1] = { 0.5f, -0.5f, 0.0f, 1.0f }; // BR
+		s_Data.QuadVertexPositions[2] = { 0.5f,  0.5f, 0.0f, 1.0f }; // TR
+		s_Data.QuadVertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f }; // TL
 	}
 
 	void Renderer2D::Shutdown()
@@ -150,7 +150,7 @@ namespace Shengine {
 
 	}
 
-	void Renderer2D::DrawQuad(const glm::mat4& transform, const std::shared_ptr<Texture2D> texture, const glm::vec4& tintColor)
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D> texture, const glm::vec4& tintColor)
 	{
 		const size_t quadVertexCount = 4;
 		const glm::vec2 texCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
@@ -190,6 +190,82 @@ namespace Shengine {
 
 		s_Data.QuadIndexCount += 6;
 	}
+
+	void Renderer2D::DrawString(const glm::mat4 transform, const Ref<Font> font, const std::string& text, const glm::vec4& color)
+	{
+		const size_t quadVertexCount = 4;
+		float textureIndex = 0.0f;
+		float advanceX = 0.0f;
+
+
+
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+			FlushAndReset();
+
+		for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
+		{
+			if (*s_Data.TextureSlots[i] == *font->GetTexture())
+			{
+				textureIndex = (float)i;
+				break;
+			}
+		}
+
+		if (textureIndex == 0.0f)
+		{
+			if (s_Data.TextureSlotIndex >= Renderer2DData::MaxTextureSlots)
+				FlushAndReset();
+
+			textureIndex = (float)s_Data.TextureSlotIndex;
+			s_Data.TextureSlots[s_Data.TextureSlotIndex] = font->GetTexture();
+			s_Data.TextureSlotIndex++;
+		}
+
+		for (const char& c : text)
+		{
+			if (s_Data.QuadIndexCount >= s_Data.MaxIndices)
+				FlushAndReset();
+
+			ftgl::texture_glyph_t* glyph = font->GetGlyph(&c);
+			
+			const glm::vec2 texCoords[] = {
+				{ glyph->s0, glyph->t0 },
+				{ glyph->s1, glyph->t0 },
+				{ glyph->s1, glyph->t1 },
+				{ glyph->s0, glyph->t1 }
+			};
+
+
+			float x0 = advanceX + glyph->offset_x;
+			float y0 = glyph->offset_y;
+			float x1 = x0 + glyph->width;
+			float y1 = y0 - glyph->height;
+
+			const glm::vec4 textPos[] = {
+				{ x0, y0, 1, 1 },
+				{ x1, y0, 1 , 1 },
+				{ x1, y1, 1 , 1 },
+				{ x0, y1, 1 , 1 },
+			};
+
+
+			for (size_t i = 0; i < quadVertexCount; i++)
+			{
+				s_Data.QuadVertexBufferPtr->Position =  transform * textPos[i];
+				s_Data.QuadVertexBufferPtr->Color = color;
+				s_Data.QuadVertexBufferPtr->TexCoord = texCoords[i];
+				s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+				s_Data.QuadVertexBufferPtr++;
+			}
+
+			s_Data.QuadIndexCount += 6;
+
+			advanceX += glyph->advance_x;
+		}
+
+	}
+
+	
 
 	void Renderer2D::End()
 	{

@@ -4,6 +4,7 @@
 #include <gfx/Renderable2D.h>
 #include <gfx/Renderer2D.h>
 #include <gfx/OrthoCameraController.h>
+#include <gfx/Font.h>
 
 class GameLayer : public Shengine::Layer
 {
@@ -18,4 +19,6 @@ public:
 private:
 	Shengine::Renderable2D m_Renderable;
     Shengine::OrthoCameraController m_CameraController;
+	Shengine::Ref<Shengine::Font> m_Font;
+	Shengine::Ref<Shengine::Texture2D> m_Texture;
 };

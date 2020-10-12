@@ -13,6 +13,20 @@ namespace Shengine {
 		glDeleteTextures(1, &m_TextureID);
 	}
 
+	Ref<Texture2D> Texture2D::Create(const std::string& path)
+	{
+		Ref<Texture2D> t = CreateRef<Texture2D>();
+		t->LoadFromFile(path);
+		return t;
+	}
+
+	Ref<Texture2D> Texture2D::Create(void* data, uint32_t width, uint32_t height, int channels)
+	{
+		Ref<Texture2D> t = CreateRef<Texture2D>();
+		t->LoadFromMemory(data, width, height, channels);
+		return t;
+	}
+
 	void Texture2D::LoadFromFile(const std::string& path)
 	{
 		stbi_set_flip_vertically_on_load(true);
@@ -45,7 +59,16 @@ namespace Shengine {
 
 		CORE_ASSERT(channels == 1 || channels == 3 || channels == 4, "Specified unsupported amount of channels");
 
-		if (channels == 3)
+		if (channels == 1)
+		{
+			internalFormat = GL_RED;
+			dataFormat = GL_RED;
+			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_ONE));
+			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_ONE));
+			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_ONE));
+			GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_A, GL_RED));
+		}
+		else if (channels == 3)
 		{
 			internalFormat = GL_RGB;
 			dataFormat = GL_RGB;
